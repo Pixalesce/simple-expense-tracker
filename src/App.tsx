@@ -25,8 +25,8 @@ const defaultFormState = (baseCurrency: string): TransactionFormState => ({
     date: new Date().toISOString().slice(0, 10), // so that the correct values are displayed in the form
     description: "",
     amount: 0,
-    category: "",
-    paymentMethod: "Credit Card",
+    category: "Food & Drink",
+    paymentMethod: "Cash",
     type: "Expense",
     currency: baseCurrency,
     baseAmount: 0,

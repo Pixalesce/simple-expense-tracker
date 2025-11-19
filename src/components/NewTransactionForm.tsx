@@ -53,6 +53,14 @@ export default function NewTransactionForm({
         "Debit Card",
         "Bank Transfer",
     ];
+    const expenseCategories = [
+        "Food & Drink",
+        "Entertainment",
+        "Transport",
+        "Gift",
+        "Groceries",
+    ];
+    const incomeCategories = ["Repayment", "Salary", "Project Payment"];
 
     return (
         <DialogContent>
@@ -104,7 +112,7 @@ export default function NewTransactionForm({
                         id="currency"
                         placeholder="e.g. USD, EUR, SGD"
                         maxLength={3}
-                        onKeyPress={(e) => {
+                        onKeyDown={(e) => {
                             if (!/[a-zA-Z]/.test(e.key)) {
                                 e.preventDefault();
                             }
@@ -206,15 +214,23 @@ export default function NewTransactionForm({
                 )}
                 <div className="grid gap-2">
                     <Label htmlFor="category">Category</Label>
-                    <Input
+                    <select
                         id="category"
-                        placeholder="e.g. Food & Drink"
-                        {...register("category", {
-                            required: "Category is required.",
-                            validate: (value) =>
-                                Boolean(value.trim()) || "Category is required.",
-                        })}
-                    />
+                        className="focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 text-base shadow-xs outline-none transition-[color,box-shadow] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+                        {...register("category")}
+                    >
+                        {watchedType === "Expense"
+                            ? expenseCategories.map((category) => (
+                                <option key={category} value={category}>
+                                    {category}
+                                </option>
+                            ))
+                            : incomeCategories.map((category) => (
+                                <option key={category} value={category}>
+                                    {category}
+                                </option>
+                            ))}
+                    </select>
                     {errors.category?.message ? (
                         <p className="text-sm text-destructive">
                             {errors.category.message}
